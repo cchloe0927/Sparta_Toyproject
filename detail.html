@@ -31,25 +31,21 @@
             font-family: 'Nanum Gothic Coding', monospace;
         }
 
-        .container {
-            height: 5px;
-        }
-
         .page-title {
-            font-size: 40px;
+            font-size: 30px;
             color: black;
             font-weight: bold;
         }
 
-        .mybtn {
+        .to_listpage {
             display: block;
             font-size: 17px;
-            margin-top: 15px;
+            margin-bottom: 2px;
             float: right;
         }
 
         .wrap {
-            width: 1100px;
+            width: 1200px;
             margin: auto;
         }
 
@@ -125,12 +121,10 @@
 
 </head>
 <body>
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <button onclick="window.location.href='/'" type="button" class="btn btn-dark mybtn">리스트 페이지</button>
-            <h1 class="display-4 page-title">추천 영화 페이지</h1>
-        </div>
-    </div>
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1 page-title">추천 영화 페이지</span>
+        <a href='/' class="to_listpage">리스트 페이지</a>
+    </nav>
     <div class="wrap">
         <div class="movie-title">
             <hi>추천 영화 TOP 3</hi>
