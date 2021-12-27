@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS  Bulma CSS 링크  font awesome 링크-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!--    구글폰트-->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&display=swap" rel="stylesheet">
+
+    <title>추천 영화 리스트</title>
+
+    <style>
+        * {
+            font-family: 'Nanum Gothic Coding', monospace;
+        }
+
+        .container {
+            height: 5px;
+        }
+
+        .page-title {
+            font-size: 40px;
+            color: black;
+            font-weight: bold;
+        }
+
+        .mybtn {
+            display: block;
+            font-size: 17px;
+            margin-top: 15px;
+            float: right;
+        }
+
+        .wrap {
+            width: 1100px;
+            margin: auto;
+        }
+
+        .movie-title {
+            color: black;
+            font-size: 26px;
+            display: block;
+            margin-top: 70px;
+            margin-bottom: 30px;
+        }
+
+        .rank-type {
+            font-size: 17px;
+            color: midnightblue;
+            margin-top: 10px;
+            word-spacing: 30px;
+        }
+
+        .card {
+            display: block;
+            margin: 0px auto 50px 0px;
+        }
+
+        .img-box {
+            display: flex;    /*가로 정렬*/
+            flex-wrap: wrap;  /*정렬 된 요소들의 총 넓이가 부모 넓이 보다 클 때 이 요소들을 다음 중에 이어서 나열해주는 기능*/
+            float: left;      /*왼쪽 부터 나열*/
+        }
+
+        .card-text {
+            text-align: left;   /*텍스트 img 아래 정렬*/
+            font-size: 15px;
+            color: black;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+                showMoies();
+            });
+
+        function showMoies() {
+            $.ajax({
+                type: "GET",
+                url: "/recommend",
+                data: {},
+                success: function (response) {
+                    let movies = response['recommend_movies']
+                    for (let i=0; i<movies.length; i++) {
+                        let image = movies[i]['image']
+                        let title = movies[i]['title']
+                        let url = movies[i]['url']
+
+                        let temp_html = `<div class="card">
+                                             <img src="${image}"
+                                                 style=" display:block;">
+                                             <div class="card-text">
+                                             <a target="_blank" href="${url}" class="card-title">${title}</a>
+                                             </div>
+                                         </div>`
+                        $('#movie-box').append(temp_html)
+                    }
+                }
+            })
+        }
+
+// let star = movies[i]['star']
+// <!-- <p>좋아요 수: ${star}</p>-->  temp_html ``안 a태그 밑에
+// <!-- like값 대신 db에 우선 평점값 저장해보기-->
+    </script>
+
+</head>
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <button onclick="window.location.href='/'" type="button" class="btn btn-dark mybtn">리스트 페이지</button>
+            <h1 class="display-4 page-title">추천 영화 페이지</h1>
+        </div>
+    </div>
+    <div class="wrap">
+        <div class="movie-title">
+            <hi>추천 영화 TOP 3</hi>
+            <p class="rank-type">
+                <a>좋아요순</a>
+                <a>후기순</a>    <!--후기순 많은 영화 보여 주기 기능 ...일단 무시-->
+            </p>
+        </div>
+        <div class="img-box" id="movie-box">
+        </div>
+    </div>
+</body>
+</html>
